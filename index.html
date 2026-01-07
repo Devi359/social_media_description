@@ -1,0 +1,40 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Social Media Analyzer</title> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"> 
+</head> 
+<body> 
+    <h1>Analyze Social Media Posts</h1> 
+ <!-- Form for entering social media post text --> 
+    <form method="POST" action="/analyze"> 
+        <textarea name="text" rows="5" cols="50" placeholder="Enter your social 
+media post here..."></textarea><br><br> 
+        <button type="submit">Analyze</button> 
+    </form> 
+{% if sentiment %} 
+    <h2>Analysis Results for: "{{ text }}"</h2> 
+    <!-- Display Sentiment Analysis Result --> 
+    <h3>Detected Sentiment:</h3> 
+    <p>{{ sentiment }}</p> 
+    <p>Confidence Score: {{ score }}</p> 
+    <!-- Display Extracted Hashtags --> 
+    {% if hashtags %} 
+    <h3>Extracted Hashtags:</h3> 
+    <ul> 
+        {% for tag in hashtags %} 
+            <li>#{{ tag }}</li> 
+        {% endfor %} 
+    </ul> 
+    {% endif %} 
+    <!-- Display Trend Detection Graph --> 
+    <h3>Trending Hashtags</h3> 
+    <img src="{{ url_for('trends') }}" alt="Trending Hashtags Graph"> 
+    <!-- Button to Evaluate Accuracy Scores --> 
+    <a href="/evaluate" style="text-decoration: none; color: #2980b9; font-size: 
+1.2rem;">Evaluate Accuracy</a> 
+    {% endif %} 
+</body> 
+</html>
