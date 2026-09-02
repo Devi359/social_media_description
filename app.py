@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template, send_file, jsonify
-from transformers import pipeline
 import matplotlib.pyplot as plt
 import sqlite3
 import os
@@ -44,10 +43,30 @@ def init_db():
 # LOAD SENTIMENT ANALYSIS MODEL
 # ==================================================
 
-sentiment_model = pipeline(
-    "sentiment-analysis",
-    model="distilbert-base-uncased-finetuned-sst-2-english"
-)
+def sentiment_model(text):
+    text_lower = text.lower()
+
+    positive_words = [
+        "love", "good", "great", "awesome", "amazing",
+        "excellent", "happy", "best", "wonderful", "nice"
+    ]
+
+    negative_words = [
+        "hate", "bad", "worst", "terrible", "awful",
+        "sad", "angry", "poor", "disappointing"
+    ]
+
+    positive_count = sum(word in text_lower for word in positive_words)
+    negative_count = sum(word in text_lower for word in negative_words)
+
+    if positive_count > negative_count:
+        return {"label": "POSITIVE", "score": 0.90}
+
+    elif negative_count > positive_count:
+        return {"label": "NEGATIVE", "score": 0.90}
+
+    else:
+        return {"label": "POSITIVE", "score": 0.50}
 
 # ==================================================
 # PROJECT ACCURACY
@@ -272,7 +291,7 @@ def analyze():
     processed_text = preprocess_text(text)
 
     # AI sentiment prediction
-    result = sentiment_model(processed_text)[0]
+    result = sentiment_model(processed_text)
 
     sentiment_score = result["score"]
 
@@ -621,8 +640,8 @@ def health():
         "application":
             "NLP Social Media Analyzer",
 
-        "model":
-            "Twitter RoBERTa Sentiment",
+       "model":
+    "Lightweight Rule-Based Sentiment Classifier",
 
         "database":
             "SQLite",
