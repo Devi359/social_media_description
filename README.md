@@ -1,4 +1,4 @@
-                              **NLP Social Media Analyzer**
+# NLP Social Media Analyzer
 
 A web-based **Natural Language Processing (NLP)** application built with **Python Flask** that analyzes social media posts using the **Twitter RoBERTa Sentiment Model**. The system identifies sentiment, extracts hashtags, detects content patterns, stores analysis history using SQLite, and provides an interactive analytics dashboard.
 
@@ -17,6 +17,11 @@ Users can enter a social media post and instantly receive:
 * Model evaluation information
 
 The application also stores analyzed posts in a **SQLite database**, allowing analysis history to persist even after restarting the application.
+
+## 🌐 Live Demo
+
+👉 [NLP Social Media Analyzer – Live Demo](https://nlp-social-media-analyzer.onrender.com/)
+
 
 ## 🎯 Objectives
 
