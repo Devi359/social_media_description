@@ -48,6 +48,10 @@ init_db()
 # LOAD SENTIMENT ANALYSIS MODEL
 # ==================================================
 
+# ==================================================
+# LOAD SENTIMENT ANALYSIS MODEL
+# ==================================================
+
 def sentiment_model(text):
     text_lower = text.lower()
 
@@ -61,17 +65,31 @@ def sentiment_model(text):
         "sad", "angry", "poor", "disappointing"
     ]
 
-    positive_count = sum(word in text_lower for word in positive_words)
-    negative_count = sum(word in text_lower for word in negative_words)
+    positive_count = sum(
+        word in text_lower for word in positive_words
+    )
+
+    negative_count = sum(
+        word in text_lower for word in negative_words
+    )
 
     if positive_count > negative_count:
-        return {"label": "POSITIVE", "score": 0.90}
+        return {
+            "label": "POSITIVE",
+            "score": 0.90
+        }
 
     elif negative_count > positive_count:
-        return {"label": "NEGATIVE", "score": 0.90}
+        return {
+            "label": "NEGATIVE",
+            "score": 0.90
+        }
 
     else:
-        return {"label": "POSITIVE", "score": 0.50}
+        return {
+            "label": "NEUTRAL",
+            "score": 0.50
+        }
 
 # ==================================================
 # PROJECT ACCURACY
@@ -106,9 +124,10 @@ def classify_extended_sentiment(text, model_label):
     text_lower = text.lower()
 
     label_map = {
-    "POSITIVE": "Positive",
-    "NEGATIVE": "Negative"
-}
+        "POSITIVE": "Positive",
+        "NEGATIVE": "Negative",
+        "NEUTRAL": "Neutral"
+    }
 
     base_sentiment = label_map.get(model_label, "Unknown")
 
