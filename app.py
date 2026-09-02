@@ -46,9 +46,8 @@ def init_db():
 
 sentiment_model = pipeline(
     "sentiment-analysis",
-    model="cardiffnlp/twitter-roberta-base-sentiment"
+    model="distilbert-base-uncased-finetuned-sst-2-english"
 )
-
 
 # ==================================================
 # PROJECT ACCURACY
@@ -83,10 +82,9 @@ def classify_extended_sentiment(text, model_label):
     text_lower = text.lower()
 
     label_map = {
-        "LABEL_0": "Negative",
-        "LABEL_1": "Neutral",
-        "LABEL_2": "Positive"
-    }
+    "POSITIVE": "Positive",
+    "NEGATIVE": "Negative"
+}
 
     base_sentiment = label_map.get(model_label, "Unknown")
 
