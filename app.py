@@ -144,7 +144,7 @@ def classify_extended_sentiment(text, model_label):
         return "Mixed Sentiment"
 
     # Promotional content
-    elif any(word in text_lower for word in [
+    elif any(contains_keyword(text_lower, word) for word in [
         "buy now",
         "new post",
         "check out",
