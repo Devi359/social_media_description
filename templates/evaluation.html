@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Model Evaluation | NLP Analyzer</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- ================================
+         NAVIGATION BAR
+    ================================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            <span>🧠</span> NLP Analyzer
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Analyzer</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/evaluate" class="active">Evaluation</a>
+        </div>
+
+    </nav>
+
+
+    <!-- ================================
+         MAIN CONTENT
+    ================================= -->
+
+    <main class="evaluation-container">
+
+
+        <!-- ================================
+             HERO
+        ================================= -->
+
+        <section class="evaluation-hero">
+
+            <span class="badge">
+                MODEL PERFORMANCE • EVALUATION
+            </span>
+
+            <h1>
+                Model <span>Evaluation</span>
+            </h1>
+
+            <p>
+                Evaluate the performance of the NLP sentiment analysis
+                and hashtag trend detection models.
+            </p>
+
+        </section>
+
+
+        <!-- ================================
+             PERFORMANCE METRICS
+        ================================= -->
+
+        <section class="evaluation-section">
+
+            <div class="section-title">
+
+                <span>
+                    PERFORMANCE METRICS
+                </span>
+
+                <h2>
+                    Model Performance
+                </h2>
+
+            </div>
+
+
+            <div class="evaluation-grid">
+
+
+                <!-- Sentiment Accuracy -->
+
+                <div class="evaluation-card">
+
+                    <div class="evaluation-icon">
+                        🎯
+                    </div>
+
+                    <p class="evaluation-label">
+                        SENTIMENT ACCURACY
+                    </p>
+
+                    <h3>
+                        {{ "%.0f"|format(sentiment_accuracy * 100) }}%
+                    </h3>
+
+                    <span class="metric-status">
+                        Sentiment Model
+                    </span>
+
+                </div>
+
+
+                <!-- Trend Accuracy -->
+
+                <div class="evaluation-card">
+
+                    <div class="evaluation-icon">
+                        📈
+                    </div>
+
+                    <p class="evaluation-label">
+                        TREND ACCURACY
+                    </p>
+
+                    <h3>
+                        {{ "%.0f"|format(trend_accuracy * 100) }}%
+                    </h3>
+
+                    <span class="metric-status">
+                        Trend Detection
+                    </span>
+
+                </div>
+
+
+                <!-- NLP Model -->
+
+                <div class="evaluation-card">
+
+                    <div class="evaluation-icon">
+                        🧠
+                    </div>
+
+                    <p class="evaluation-label">
+                        NLP MODEL
+                    </p>
+
+                    <h3>
+                        RoBERTa
+                    </h3>
+
+                    <span class="metric-status">
+                        Transformer Model
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             MODEL INFORMATION
+        ================================= -->
+
+        <section class="model-info-card">
+
+            <div class="model-info-icon">
+                🤖
+            </div>
+
+            <div class="model-info-content">
+
+                <span class="evaluation-label">
+                    MODEL INFORMATION
+                </span>
+
+                <h2>
+                    Twitter RoBERTa Sentiment Model
+                </h2>
+
+                <p>
+                    The system uses the Twitter RoBERTa sentiment
+                    analysis model to classify social media posts
+                    into Positive, Negative, and Neutral sentiments.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             EVALUATION COMPONENTS
+        ================================= -->
+
+        <section class="evaluation-section">
+
+            <div class="section-title">
+
+                <span>
+                    EVALUATION COMPONENTS
+                </span>
+
+                <h2>
+                    What We Evaluate
+                </h2>
+
+            </div>
+
+
+            <div class="evaluation-tags">
+
+                <span class="evaluation-tag">
+                    💬 Sentiment Analysis
+                </span>
+
+                <span class="evaluation-tag">
+                    #️⃣ Hashtag Trend Detection
+                </span>
+
+                <span class="evaluation-tag">
+                    🧠 NLP Classification
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             ACTION BUTTONS
+        ================================= -->
+
+        <section class="evaluation-actions">
+
+            <a href="/" class="secondary-button">
+                ← Analyze New Post
+            </a>
+
+            <a href="/dashboard" class="secondary-button">
+                View Dashboard →
+            </a>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================================
+         FOOTER
+    ================================= -->
+
+    <footer>
+
+        <p>
+            NLP Social Media Analyzer
+            <span>•</span>
+            Built with Python, Flask & RoBERTa
+        </p>
+
+    </footer>
+
+
+</body>
+</html>
