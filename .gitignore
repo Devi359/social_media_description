@@ -1,0 +1,29 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Local database
+nlp_analyzer.db
+
+# Generated chart images
+trends.png
+sentiment_distribution.png
+
+# Backup files
+app_backup.py
+
+# Environment / secret files
+.env
+
+# IDE files
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
