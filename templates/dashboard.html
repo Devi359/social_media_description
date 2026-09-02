@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NLP Analyzer Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- ================================
+         NAVIGATION BAR
+    ================================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            <span>🧠</span> NLP Analyzer
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Analyzer</a>
+            <a href="/dashboard" class="active">Dashboard</a>
+            <a href="/evaluate">Evaluation</a>
+        </div>
+
+    </nav>
+
+
+    <!-- ================================
+         MAIN DASHBOARD
+    ================================= -->
+
+    <main class="dashboard-container">
+
+
+        <!-- Dashboard Heading -->
+
+        <div class="dashboard-heading">
+
+            <span class="badge">
+                LIVE ANALYTICS
+            </span>
+
+            <h1>
+                NLP Analytics Dashboard
+            </h1>
+
+            <p>
+                Monitor social media sentiment and hashtag trends
+                in real time.
+            </p>
+
+        </div>
+
+
+        <!-- ================================
+             STATISTICS CARDS
+        ================================= -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📝
+                </div>
+
+                <div>
+                    <p>Total Posts</p>
+
+                    <h2 id="totalPosts">
+                        {{ total_posts }}
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    #
+                </div>
+
+                <div>
+                    <p>Total Hashtags</p>
+
+                    <h2 id="totalHashtags">
+                        {{ total_hashtags }}
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🎯
+                </div>
+
+                <div>
+                    <p>Sentiment Accuracy</p>
+
+                    <h2 id="sentimentAccuracy">
+                        {{ sentiment_accuracy }}%
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📈
+                </div>
+
+                <div>
+                    <p>Trend Accuracy</p>
+
+                    <h2 id="trendAccuracy">
+                        {{ trend_accuracy }}%
+                    </h2>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             SENTIMENT SUMMARY
+        ================================= -->
+
+        <section class="sentiment-summary">
+
+            <div class="sentiment-summary-card positive-card">
+
+                <div class="summary-icon">
+                    😊
+                </div>
+
+                <div>
+                    <p>Positive Posts</p>
+
+                    <h2 id="positiveCount">
+                        0
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="sentiment-summary-card negative-card">
+
+                <div class="summary-icon">
+                    😞
+                </div>
+
+                <div>
+                    <p>Negative Posts</p>
+
+                    <h2 id="negativeCount">
+                        0
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="sentiment-summary-card neutral-card">
+
+                <div class="summary-icon">
+                    😐
+                </div>
+
+                <div>
+                    <p>Neutral Posts</p>
+
+                    <h2 id="neutralCount">
+                        0
+                    </h2>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             TRENDING HASHTAGS
+        ================================= -->
+
+        <section class="dashboard-section">
+
+            <div class="section-header">
+
+                <span class="section-label">
+                    TREND ANALYSIS
+                </span>
+
+                <h2>
+                    🔥 Trending Hashtags
+                </h2>
+
+            </div>
+
+
+            <div class="trend-content">
+
+
+                <!-- Trend List -->
+
+                <div class="trend-list" id="trendList">
+
+                    {% if top_tags %}
+
+                        {% for tag, count in top_tags %}
+
+                        <div class="trend-item">
+
+                            <span>
+                                #{{ tag }}
+                            </span>
+
+                            <strong>
+                                {{ count }}
+                            </strong>
+
+                        </div>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <p>
+                            No hashtag data available.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Trend Chart -->
+
+                <div class="trend-chart">
+
+                    <img
+                        src="{{ url_for('trends') }}"
+                        alt="Trending Hashtags Graph"
+                    >
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             SENTIMENT DISTRIBUTION
+        ================================= -->
+
+        <section class="dashboard-section">
+
+            <div class="section-header">
+
+                <span class="section-label">
+                    SENTIMENT ANALYSIS
+                </span>
+
+                <h2>
+                    😊 Sentiment Distribution
+                </h2>
+
+                <p>
+                    Distribution of analyzed social media posts by sentiment.
+                </p>
+
+            </div>
+
+
+            <div class="sentiment-chart-card">
+
+                <img
+                    src="{{ url_for('sentiment_chart') }}"
+                    alt="Sentiment Distribution Chart"
+                >
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             RECENT ANALYSIS
+        ================================= -->
+
+        <section class="dashboard-section">
+
+            <div class="section-header">
+
+                <span class="section-label">
+                    RECENT ACTIVITY
+                </span>
+
+                <h2>
+                    📊 Recent Analyses
+                </h2>
+
+            </div>
+
+
+            {% if analysis_history %}
+
+            <div class="history-table">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Post</th>
+                            <th>Sentiment</th>
+                            <th>Confidence</th>
+                            <th>Hashtags</th>
+                            <th>Time</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for item in analysis_history|reverse %}
+
+                        <tr>
+
+                            <td>
+                                {{ item.text }}
+                            </td>
+
+
+                            <td>
+
+                                <span class="sentiment">
+                                    {{ item.sentiment }}
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                {{ item.score }}%
+                            </td>
+
+
+                            <td>
+
+                                {% if item.hashtags %}
+
+                                    {% for tag in item.hashtags %}
+
+                                        #{{ tag }}
+
+                                    {% endfor %}
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+                                {{ item.time }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {% else %}
+
+            <div class="empty-state">
+
+                <p>
+                    No analysis history available yet.
+                </p>
+
+                <a href="/">
+                    Analyze your first post →
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- ================================
+             CLEAR HISTORY
+        ================================= -->
+
+        <section class="dashboard-actions">
+
+            <form
+                action="/clear-history"
+                method="POST"
+            >
+
+                <button
+                    type="submit"
+                    class="clear-btn"
+                    onclick="return confirm('Clear all analysis history?')"
+                >
+
+                    🗑 Clear Analysis History
+
+                </button>
+
+            </form>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================================
+         FOOTER
+    ================================= -->
+
+    <footer>
+
+        <p>
+            NLP Social Media Analyzer
+            <span>•</span>
+            Built with Python, Flask & RoBERTa
+        </p>
+
+    </footer>
+
+
+    <!-- ================================
+         REAL-TIME API UPDATE
+    ================================= -->
+
+    <script>
+
+        async function updateDashboard() {
+
+            try {
+
+                const response = await fetch("/api/stats");
+
+                const data = await response.json();
+
+
+                /* Total Posts */
+
+                document.getElementById("totalPosts")
+                    .textContent = data.total_posts;
+
+
+                /* Total Hashtags */
+
+                document.getElementById("totalHashtags")
+                    .textContent = data.total_hashtags;
+
+
+                /* Sentiment Accuracy */
+
+                document.getElementById("sentimentAccuracy")
+                    .textContent =
+                    data.sentiment_accuracy + "%";
+
+
+                /* Trend Accuracy */
+
+                document.getElementById("trendAccuracy")
+                    .textContent =
+                    data.trend_accuracy + "%";
+
+
+                /* Positive */
+
+                document.getElementById("positiveCount")
+                    .textContent =
+                    data.positive;
+
+
+                /* Negative */
+
+                document.getElementById("negativeCount")
+                    .textContent =
+                    data.negative;
+
+
+                /* Neutral */
+
+                document.getElementById("neutralCount")
+                    .textContent =
+                    data.neutral;
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Dashboard update failed:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* Update dashboard every 5 seconds */
+
+        setInterval(
+            updateDashboard,
+            5000
+        );
+
+    </script>
+
+
+</body>
+
+</html>
