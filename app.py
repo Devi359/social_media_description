@@ -1,8 +1,12 @@
 from flask import Flask, request, render_template, send_file, jsonify
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import sqlite3
 import os
 import re
+from datetime import datetime
+from zoneinfo import ZoneInfo
 from collections import Counter
 from datetime import datetime
 
@@ -305,9 +309,9 @@ def analyze():
     hashtags = extract_hashtags(text)
 
     # Current analysis time
-    analysis_time = datetime.now().strftime(
-        "%d-%m-%Y %I:%M %p"
-    )
+    analysis_time = datetime.now(
+        ZoneInfo("Asia/Kolkata")
+    ).strftime("%d-%m-%Y %I:%M %p")
 
     # Convert hashtags to database string
     hashtags_string = ",".join(hashtags)
