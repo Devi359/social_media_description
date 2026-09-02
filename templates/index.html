@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>NLP Social Media Analyzer</title>
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}">
+
+
+</head>
+
+<body>
+
+
+<!-- Navigation Bar -->
+<nav class="navbar">
+
+    <div class="logo">
+        <span>🧠</span> NLP Analyzer
+    </div>
+
+   <div class="nav-links">
+    <a href="/" class="active">Analyzer</a>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/evaluate">Evaluation</a>
+</div>
+
+</nav>
+
+
+<!-- Main Container -->
+<main class="container">
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <div class="badge">
+            AI POWERED • SENTIMENT ANALYSIS
+        </div>
+
+        <h1>
+            Social Media
+            <span>Analyzer</span>
+        </h1>
+
+        <p>
+            Analyze social media posts using Natural Language Processing,
+            sentiment detection and hashtag trend analysis.
+        </p>
+
+    </section>
+
+
+    <!-- Analyzer Card -->
+    <section class="analyzer-card">
+
+        <div class="card-header">
+            <div>
+                <h2>Analyze Your Post</h2>
+                <p>Enter a social media post below.</p>
+            </div>
+
+            <div class="ai-icon">
+                ✨
+            </div>
+        </div>
+
+
+        <form method="POST" action="/analyze">
+
+            <textarea
+                name="text"
+                rows="6"
+                placeholder="Example: I love this amazing project! #Python #NLP"
+                required></textarea>
+
+            <div class="form-footer">
+
+                <span class="hint">
+                    Supports hashtags and social media text
+                </span>
+
+                <button type="submit">
+                    Analyze Sentiment →
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+
+    {% if sentiment %}
+
+    <!-- Results Section -->
+    <section class="results-section">
+
+        <div class="section-title">
+            <span>ANALYSIS RESULT</span>
+            <h2>Your Post Analysis</h2>
+        </div>
+
+
+        <div class="result-grid">
+
+            <!-- Sentiment -->
+            <div class="result-card">
+
+                <div class="result-icon sentiment-icon">
+                    🎯
+                </div>
+
+                <p class="result-label">
+                    DETECTED SENTIMENT
+                </p>
+
+                <h3 class="sentiment-result {{ sentiment|lower|replace(' ', '-') }}">
+    {{ sentiment }}
+</h3>
+
+            </div>
+
+
+            <!-- Confidence -->
+
+
+            <div class="result-card">
+
+                <div class="result-icon confidence-icon">
+                    📊
+                </div>
+
+                <p class="result-label">
+                    CONFIDENCE SCORE
+                </p>
+
+                <h3 class="confidence-result">
+                    {{ "%.2f"|format(score) }}%
+                </h3>
+
+            </div>
+
+
+            <!-- Hashtags -->
+
+
+            <div class="result-card">
+
+                <div class="result-icon hashtag-icon">
+                    #
+                </div>
+
+                <p class="result-label">
+                    HASHTAGS FOUND
+                </p>
+
+                <h3>
+                    {{ hashtags|length }}
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <!-- Original Text -->
+
+
+        <div class="original-post">
+
+            <p class="result-label">
+                ANALYZED POST
+            </p>
+
+            <p class="post-text">
+                "{{ text }}"
+            </p>
+
+        </div>
+
+
+        {% if hashtags %}
+
+        <!-- Hashtags -->
+
+
+        <div class="hashtag-section">
+
+            <h3>Extracted Hashtags</h3>
+
+            <div class="hashtags">
+
+                {% for tag in hashtags %}
+
+                <span class="hashtag">
+                    #{{ tag }}
+                </span>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- Action Buttons -->
+
+
+<div class="action-area">
+
+    <a href="/dashboard" class="secondary-button">
+        View Dashboard →
+    </a>
+
+    <a href="/evaluate" class="secondary-button">
+        View Model Evaluation →
+    </a>
+
+</div>
+
+    </section>
+
+    {% endif %}
+
+</main>
+
+
+<!-- Footer -->
+<footer>
+
+    <p>
+        NLP Social Media Analyzer
+        <span>•</span>
+        Built with Python & Flask
+    </p>
+
+</footer>
+
+
+</body>
+</html>
