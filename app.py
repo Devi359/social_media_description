@@ -119,6 +119,14 @@ def extract_hashtags(text):
 # EXTENDED SENTIMENT CLASSIFICATION
 # ==================================================
 
+
+def contains_keyword(text, keyword):
+    return re.search(
+        rf"(?<!\w){re.escape(keyword)}(?!\w)",
+        text
+    ) is not None
+
+
 def classify_extended_sentiment(text, model_label):
 
     text_lower = text.lower()
@@ -147,7 +155,7 @@ def classify_extended_sentiment(text, model_label):
         return "Promotional"
 
     # Trending content
-    elif any(word in text_lower for word in [
+    elif any(contains_keyword(text_lower, word) for word in [
         "trending",
         "viral",
         "buzzing"
@@ -155,7 +163,7 @@ def classify_extended_sentiment(text, model_label):
         return "Trendy"
 
     # Sarcasm
-    elif any(word in text_lower for word in [
+    elif any(contains_keyword(text_lower, word) for word in [
         "oh great",
         "as if",
         "yeah right",
@@ -164,7 +172,7 @@ def classify_extended_sentiment(text, model_label):
         return "Sarcastic"
 
     # Events
-    elif any(word in text_lower for word in [
+    elif any(contains_keyword(text_lower, word) for word in [
         "concert",
         "event",
         "webinar",
@@ -174,7 +182,7 @@ def classify_extended_sentiment(text, model_label):
         return "Event-Based"
 
     # Customer feedback
-    elif any(word in text_lower for word in [
+    elif any(contains_keyword(text_lower, word) for word in [
         "support",
         "help",
         "ticket",
@@ -185,7 +193,7 @@ def classify_extended_sentiment(text, model_label):
         return "Customer Feedback"
 
     # News
-    elif any(word in text_lower for word in [
+    elif any(contains_keyword(text_lower, word) for word in [
         "breaking",
         "headline",
         "news",
@@ -194,7 +202,7 @@ def classify_extended_sentiment(text, model_label):
         return "News Reaction"
 
     # Motivation
-    elif any(word in text_lower for word in [
+    elif any(contains_keyword(text_lower, word) for word in [
         "never give up",
         "stay strong",
         "believe",
