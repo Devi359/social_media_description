@@ -56,23 +56,69 @@ def sentiment_model(text):
     text_lower = text.lower()
 
     positive_words = [
+        # English
         "love", "good", "great", "awesome", "amazing",
-        "excellent", "happy", "best", "wonderful", "nice"
+        "excellent", "happy", "best", "wonderful", "nice",
+        
+        # Tamil / Tanglish positive
+        "uyir", "nesam", "nesikkiren", "pidikkum",
+        "arumai", "super", "semma", "mass", "vera level",
+        "nalla", "santhosham", "magizhchi",
+        "azhagu", "azhagana", "sirappu",
+        "thala", "thalapathy",
+        "vaazhga", "valga", "vetri",
+        "trust", "faith", "blessed",
+        "proud", "pride"
     ]
 
     negative_words = [
+        # English
         "hate", "bad", "worst", "terrible", "awful",
-        "sad", "angry", "poor", "disappointing"
+        "sad", "angry", "poor", "disappointing",
+        
+        # Tamil / Tanglish negative
+        "mosam", "mosama", "kevalam", "kevalama",
+        "veruppu", "verukkiren", "kastam",
+        "kashtam", "sogam", "kovam",
+        "pidikkala", "pidikala",
+        "thappu", "worst", "problem",
+        "issue", "disappointed"
     ]
 
+    # Positive keyword count
     positive_count = sum(
-        word in text_lower for word in positive_words
+        contains_keyword(text_lower, word)
+        for word in positive_words
     )
 
+    # Negative keyword count
     negative_count = sum(
-        word in text_lower for word in negative_words
+        contains_keyword(text_lower, word)
+        for word in negative_words
     )
 
+    # Positive emojis
+    positive_emojis = [
+        "❤️", "❤", "💖", "💕", "💗",
+        "😍", "🥰", "😊", "😁", "😄",
+        "🔥", "💯", "✨", "🙌", "🙏"
+    ]
+
+    # Negative emojis
+    negative_emojis = [
+        "😡", "🤬", "😠", "😞", "😔",
+        "😢", "😭", "💔", "😩", "😫"
+    ]
+
+    positive_count += sum(
+        emoji in text for emoji in positive_emojis
+    )
+
+    negative_count += sum(
+        emoji in text for emoji in negative_emojis
+    )
+
+    # Final sentiment
     if positive_count > negative_count:
         return {
             "label": "POSITIVE",
@@ -90,7 +136,6 @@ def sentiment_model(text):
             "label": "NEUTRAL",
             "score": 0.50
         }
-
 # ==================================================
 # PROJECT ACCURACY
 # ==================================================
